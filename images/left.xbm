@@ -1,0 +1,4 @@
+#define left_width 6
+#define left_height 5
+static unsigned char left_bits[] = {
+   0x04, 0x06, 0x3f, 0x06, 0x04 };

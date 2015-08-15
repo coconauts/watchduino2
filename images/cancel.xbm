@@ -1,0 +1,4 @@
+#define cancel_width 5
+#define cancel_height 5
+static unsigned char cancel_bits[] = {
+   0x11, 0x0a, 0x04, 0x0a, 0x11 };

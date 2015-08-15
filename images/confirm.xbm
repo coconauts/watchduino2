@@ -1,0 +1,4 @@
+#define confirm_width 5
+#define confirm_height 4
+static unsigned char confirm_bits[] = {
+   0x10, 0x08, 0x05, 0x02 };
