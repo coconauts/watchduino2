@@ -5,12 +5,13 @@
 You'll need the following in order to build a WatchDuino 2:
 
 - 1 × Arduino mini pro 2 8Mhz 3.3v
+- 1 × FTDI USB to TTL serial adapter
 - 1 × LIPO battery 240mah
 - 1 × 0.96” I2C 128X64 OLED
 - 4 × 3 x 6 x 4.3mm Push Button 2 Pin
 - 1 × 0.06A Micro Vibrator Motor
-- 1 × Micro USB LIPO charger External charger
 - 1 × Bluetooth 4.0 BLE module HM-10
+- 1 × Micro USB LIPO charger External charger (optional)
 
 ## Loading the WatchDuino firmware in the Arduino Mini
 
@@ -44,8 +45,11 @@ the correct compilation options.
 on the `Verify` button (the first icon in the toolbar, showing a tick). After a
 minute it should be done without errors.
 
-6. You are ready now to upload the code into your Arduino Mini. Connect
-the Arduino to your PC via USB. Then go to `Tools->Port`, and you should
+6. You are ready now to upload the code into your Arduino Mini. Plug the TTL
+adapter module to your Arduino, and then connect it to your PC via USB.
+Some LEDS on the Arduino should turn on.
+
+7. Then go to `Tools->Port`, and you should
 be able to see something in there (in my case it's '/dev/ttyUSB0', but this
 will likely be different depending on your OS. It's essentially an identifier
 for your USB port where your Arduino is plugged). If you see `Tools->Port`
@@ -53,7 +57,7 @@ greyed out, it's because you are not running the IDE with sufficient
 permissions. If you are on Linux try running the program with a superuser
 (eg. `sudo` on Ubuntu).
 
-7. After that, click on the `Upload` button (the second icon in the toolbar,
+8. After that, click on the `Upload` button (the second icon in the toolbar,
 showing a right pointing arrow). The Arduino Mini should now be loaded with
 the WatchDuino firmware.
 
@@ -78,9 +82,9 @@ connected to the USB, and place it on the breadboard. Then:
 the Arduino.
 - Place the buttons. You should be able to use them to navigate through
 the menus.
-- Place the bluetooth module. You shoud see an intermitent led flashing.
-This is because it hasn't been paired yet. If you pair to the companion phone
-app it should become fixed.
+- Place the bluetooth module. If your bluetooth module has any leds, you
+should see of them blinking intermitently. This is because it hasn't
+been paired yet. If you pair to the companion phone app it should become fixed.
 
 ## Soldering a wearable version
 
