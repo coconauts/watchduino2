@@ -64,10 +64,11 @@ prototype version on a breadboard. This way you can test that the code
 is correctly loaded into the Arduino board, and that you understood
 all the connections in the schematic right.
 
-The schematic can be found in the `schema` folder, you should see an `.fzz`
-file in there. You can use the Fritzing software to open this file, and
-it'll show you a detailed view of the components connected together, which
-you can zoom and hightlight the connections in.
+The schematic can be found in [the `schema` folder of this repo](../schema),
+you should see an `.fzz` file in there. You can use the
+[Fritzing software](http://fritzing.org/download/?donation=0) to open this
+file, and it'll show you a detailed view of the components connected together,
+which you can zoom and hightlight the connections in.
 
 After you've successfully flashed the Arduino with the firmware, leave it
 connected to the USB, and place it on the breadboard. Then:
