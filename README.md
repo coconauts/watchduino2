@@ -11,3 +11,7 @@ of documentation.
 
 See official project page for more info and updates on development:
 https://www.coconauts.net/projects/watchduino2/
+
+## Tutorials
+
+- [How to make](docs/how_to_make.md), how to build your own WatchDuino.
