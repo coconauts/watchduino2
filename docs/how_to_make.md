@@ -106,13 +106,13 @@ RX  D10
 VCC 3.3
 GND GND
 
-![](images/ble-arduino.jpg)
+![](/docs/images/ble-arduino.jpg)
 
 ## Glue the microbuttons to the screen
 
 We need the buttons to be next to the screen, and the easiest way is to glue them.
 
-![](images/screen-buttons.jpg)
+![](/docs/images/screen-buttons.jpg)
 
 ### Solder the pins and the screen
 
@@ -120,7 +120,7 @@ The main objective now is to connect the Arduino+BLE to the Screen+Buttons.
 
 To make this job easier, we soldered the screen and button pins to a middle PCB board.
 
-![](images/screen-pcb.jpg)
+![](/docs/images/screen-pcb.jpg)
 
 #### table
 PINS TODO
@@ -131,7 +131,7 @@ the Arduino Mini board.
 Once you finished, you can test the prototype by connecting the Arduino Mini
 to your computer (by using the USB-TTL adaptor).
 
-![](images/screen-arduino.jpg)
+![](/docs/images/screen-arduino.jpg)
 
 ### Buzzer and Vibrator
 
@@ -149,11 +149,11 @@ Optionally, you could remove the LiPo charger from the model, and keep 2 pins
 to charge the battery using an external LiPo charger
 (and sell it separately to become a millionarie, like the cool companies do).
 
-![](images/battery.png)
+![](/docs/images/battery.png)
 
 ### Enjoy your WatchDuino 2
 
 Now you have a fully assembled WatchDuino 2, now get a case to keep all
 the components and enjoy
 
-![](images/watchduino2.jpg)
+![](/docs/images/watchduino2.jpg)
