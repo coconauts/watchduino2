@@ -5,17 +5,26 @@
 You'll need the following in order to build a WatchDuino 2:
 
 - 1 × Arduino mini pro 2 8Mhz 3.3v
-- 1 × FTDI USB to TTL serial adapter
 - 1 × LIPO battery 240mah
 - 1 × 0.96” I2C 128X64 OLED
-- 4 × 3 x 6 x 4.3mm Push Button 2 Pin
-- 1 × 0.06A Micro Vibrator Motor
-- 1 × Bluetooth 4.0 BLE module HM-10
+- 4 × 3x6x2.5mm Push Button 2 Pin
+- 1 × 0.06A Flat Micro Vibrator Motor
+- 1 × TP4056 Micro USB LIPO charger (5V, 1A) External charger
+- 1 × HM-10 Bluetooth 4.0 Uart Transceiver
+- 1 × 12mm piezo buzzer speaker
 - 1 × Micro USB LIPO charger External charger (optional)
+
+See [this post](https://hackaday.io/project/7244-watchduino2/log/24863-watchduino-2-components-shopping-list)
+for a handy shopping list, with links to the products on Aliexpress.
+
+Since the componenents are really cheap (altogether they total roughly 10USD if
+bought on Aliexpress), it's probably is a good idea to stock yourself with
+at least a couple duplicates of each. Sometimes you can break them while
+soldering!
 
 ## Loading the WatchDuino firmware in the Arduino Mini
 
-Before you even start building, it is advisable to load the WatchDuino
+Before you even start building, it is convenient to load the WatchDuino
 firmware into the Arduino Mini. You can also do this at the end, but if you do
 it now you'll be able to try the components as you go along.
 
@@ -83,8 +92,14 @@ the Arduino.
 - Place the buttons. You should be able to use them to navigate through
 the menus.
 - Place the bluetooth module. If your bluetooth module has any leds, you
-should see of them blinking intermitently. This is because it hasn't
+should see some of them blinking intermitently. This is because it hasn't
 been paired yet. If you pair to the companion phone app it should become fixed.
+
+At this point, you have a fully functional (albeit not wearable) WatchDuino.
+Have a test around the interface, install the companion app on your phone,
+pair the two and check that the bluetooth connection works smoothly.
+Refer to [the comapanion app repo](https://github.com/coconauts/watchduino2-companion-app)
+for instructions on how to get it.
 
 ## Soldering a wearable version
 
