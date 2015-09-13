@@ -55,17 +55,17 @@ class Bluetooth {
     }
   
     void send(String m){
-      wakeUp() ;
+      
       bluetooth.println(' '+m+'\r');
        delay(BLUETOOTH_DELAY);
     } 
     void send(String command, String v){
-      wakeUp() ;
+      
       bluetooth.println(' '+command + ':'+v+'\r');
        delay(BLUETOOTH_DELAY);
     } 
     void send(String command, int v){
-      wakeUp() ;
+      
       bluetooth.print(' '+command + ':');
       bluetooth.print(v);
       bluetooth.println('\r');
@@ -85,29 +85,6 @@ class Bluetooth {
      bluetooth.print("AT"); 
      delay(BLUETOOTH_DELAY);
    }
-     void sleep(){
-       if (sleepEnabled) {
-         enabled = false;
-          enterATMode();
-          
-          bluetooth.print("AT+SLEEP"); 
-          
-          delay(BLUETOOTH_DELAY);
-       }
-     }
-     void wakeUp(){
-        if (!enabled) {
-          int i = 0;
-          while (i < 81) {
-            bluetooth.print(' ');
-            i++;
-          }
-          bluetooth.println(' ');
-          //bluetooth.print("AT+CONNL"); 
-          enabled = true;
-          delay(BLUETOOTH_DELAY);
-        }
-     }
     
   private: 
   
@@ -127,7 +104,12 @@ class Bluetooth {
     void processMessage(){
 
       //send(CM_DEBUG, buffer);
-      
+
+        #ifdef DEBUG
+              Serial.print(F("Full message "));
+              Serial.println(buffer);
+          #endif
+          
       if (buffer.startsWith(CM_PING)) {
         send(CM_PING);
       } else if (buffer.startsWith(CM_TIME)) {
@@ -197,10 +179,15 @@ class Bluetooth {
       #endif
             
       if(bluetooth.available()){
-  
+
+         wakeUp();
         enabled = true;
         data=bluetooth.read();
-        
+
+         #ifdef DEBUG
+              Serial.print(F("Received bluetooth "));
+              Serial.println(data);
+          #endif
          /*#ifdef DEBUG
           Serial.print(data);
         #endif*/

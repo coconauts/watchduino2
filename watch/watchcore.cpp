@@ -31,7 +31,7 @@
 //SLEEP VARIABLES
 bool isSleep = false;
 long sleepStart = 0;                   // counter
-#define AWAKE_TIME 30000 //every 10 seconds
+#define AWAKE_TIME 30000 //every 30 seconds
 #define SLEEP_TIME 60000
 //SOUND VARIABLES
 
@@ -51,7 +51,7 @@ int screen = 0;
 int selectedTimeSet = 0;
 
 //SETTINGS 
-bool sleep =false;
+bool sleep = true;
 bool sound = true;
 int selectedSettings = 0;
 int fixTime = 0;
@@ -105,7 +105,7 @@ int newScreen = 0;
 #endif
 
 long lastBatMsg = 0;
-#define SEND_BAT_TIME 60000
+#define SEND_BAT_TIME 300000 //Send battery status every 5 mins
 #define LOW_BAT 3500
 
 
@@ -257,12 +257,10 @@ void checkSleep(){
               
             //GO to sleep
             isSleep = true;
-            bt.send(CM_SLEEP);
+           // bt.send(CM_SLEEP);
             
             attachInterrupt(0, wakePressed, LOW);
-            
-            bt.sleep();
-            
+                        
             #ifdef VIBRATION  
               digitalWrite(VIBRATION, LOW);      //JUst in case
             #endif
@@ -273,12 +271,27 @@ void checkSleep(){
                         
             long beforeSleep;
             /*if (alarmEnabled) customDelay((alarm - now())*1000);
-            else */while ( true) {
+            else */
+            while ( isSleep) {
+              #ifdef DEBUG
+                Serial.println(F("Sleeping"));
+              #endif
+
+              delay(10);
               beforeSleep = millis();
               customDelay(SLEEP_TIME);
-              //Add 5ms to sleep time
-              if (millis() <= beforeSleep + SLEEP_TIME + 5) break;
-              else drawSleep();
+              delay(10);
+              
+              #ifdef DEBUG
+                Serial.print(F("Awaking after "));
+                Serial.print(millis() - beforeSleep);
+                Serial.println(F(" seconds"));
+              #endif 
+              
+              bt.update();
+                          
+              drawSleep();
+              
             }
             //if (bt.sleep)  bt.enable();
             
@@ -288,10 +301,10 @@ void checkSleep(){
               Serial.println(F(" seconds"));
             #endif 
             
-            bt.wakeUp();
-            bt.send(CM_AWAKE); //Unlikely to arrive
+            //bt.send(CM_AWAKE); //Unlikely to arrive
             detachInterrupt(0);
             wakeUp();
+            
             //This sleepStart hack will force the watch to sleep again in 1 second, 
             //but it will give it some space to process incoming messages via Bluetooth
             //if (isSleep) sleepStart = millis() - AWAKE_TIME + BT_CHECK ;
@@ -371,6 +384,7 @@ void selectScreenController(){
 }
 
 void wakeUp() {
+
   isSleep = false;
   sleepStart = millis() ;
 }
