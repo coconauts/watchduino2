@@ -6,8 +6,7 @@ or even build it from scratch. And at the same time,
 so that anyone can built their custom applications for it.
 
 This project is currently a work in progress in a very alpha state,
-so expect drastic changes without warning, and a disappointing lack
-of documentation.
+so expect drastic changes without warning!
 
 See official project page for more info and updates on development:
 https://www.coconauts.net/projects/watchduino2/
