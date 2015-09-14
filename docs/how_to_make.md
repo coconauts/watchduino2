@@ -5,17 +5,26 @@
 You'll need the following in order to build a WatchDuino 2:
 
 - 1 × Arduino mini pro 2 8Mhz 3.3v
-- 1 × FTDI USB to TTL serial adapter
 - 1 × LIPO battery 240mah
 - 1 × 0.96” I2C 128X64 OLED
-- 4 × 3 x 6 x 4.3mm Push Button 2 Pin
-- 1 × 0.06A Micro Vibrator Motor
-- 1 × Bluetooth 4.0 BLE module HM-10
+- 4 × 3x6x2.5mm Push Button 2 Pin
+- 1 × 0.06A Flat Micro Vibrator Motor
+- 1 × TP4056 Micro USB LIPO charger (5V, 1A) External charger
+- 1 × HM-10 Bluetooth 4.0 Uart Transceiver
+- 1 × 12mm piezo buzzer speaker
 - 1 × Micro USB LIPO charger External charger (optional)
+
+See [this post](https://hackaday.io/project/7244-watchduino2/log/24863-watchduino-2-components-shopping-list)
+for a handy shopping list, with links to the products on Aliexpress.
+
+Since the componenents are really cheap (altogether they total roughly 10USD if
+bought on Aliexpress), it's probably is a good idea to stock yourself with
+at least a couple duplicates of each. Sometimes you can break them while
+soldering!
 
 ## Loading the WatchDuino firmware in the Arduino Mini
 
-Before you even start building, it is advisable to load the WatchDuino
+Before you even start building, it is convenient to load the WatchDuino
 firmware into the Arduino Mini. You can also do this at the end, but if you do
 it now you'll be able to try the components as you go along.
 
@@ -77,73 +86,112 @@ which you can zoom and hightlight the connections in.
 After you've successfully flashed the Arduino with the firmware, leave it
 connected to the USB, and place it on the breadboard. Then:
 
-- Place the buzzer. You should hear a "beep" if you reset the Arduino.
-- Place the screen. You should see the WatchDuino interface if you reset
-the Arduino.
-- Place the buttons. You should be able to use them to navigate through
-the menus.
-- Place the bluetooth module. If your bluetooth module has any leds, you
-should see of them blinking intermitently. This is because it hasn't
-been paired yet. If you pair to the companion phone app it should become fixed.
+- Place the buzzer (on pins D12, and GND). You should hear a "beep" if you
+  reset the Arduino.
+- Place the screen (pins A4, A5, GND, VCC). You should see the WatchDuino
+  interface if you reset the Arduino.
+- Place the buttons (pins D2, D4, D5, D6). You should be able to use them
+  to navigate through the menus.
+- Place the bluetooth module (pins D9, D10, VCC and GND). If your bluetooth
+  module has any leds, you should see one of them blinking intermitently.
+  This is because it hasn't been paired yet. If you pair to the companion
+  phone app it should become fixed.
+
+![](/docs/images/breadboard.jpg)
+
+At this point, you have a fully functional (albeit not wearable) WatchDuino.
+Have a test around the interface, install the companion app on your phone,
+pair the two and check that the bluetooth connection works smoothly.
+Refer to [the comapanion app repo](https://github.com/coconauts/watchduino2-companion-app)
+for instructions on how to get it.
 
 ## Soldering a wearable version
 
-WIP!
-
-Note: Before you assembly all these modules, it's highly recommended to test
+Note: Before you assemble all these modules, it's highly recommended to test
 them separately (for instance, by building the breadboard prototype first).
+
+We'll show you how to solder the components together so that they can
+fit into the [WatchDuino case](https://www.tinkercad.com/things/0enU2XIDTaP)
+we've designed. You can 3D print the case yourself, or using any on-demand
+3D printing service, such as [Shapeways](http://www.shapeways.com/).
+
+What you'll need:
+
+- All of the WatchDuino 2 components
+- WatchDuino 2 case
+- Soldering gun
+- Glue gun
+- Stripboard
 
 ### Solder BLE and Arduino Mini together
 
-We can solder the BLE module directly to the Arduino reverse to save some space.
+For a space-efficient filt, solder the BLE module directly to the back of the
+Arduino. You only need 4 pins here:
 
-You only need 4 pins here.
-
-#### table
-BLE Arduino
-TX  D11
-RX  D10
-VCC 3.3
-GND GND
+BLE  | Arduino
+---- | -------
+TX   | D11
+RX   | D10
+VCC  | 3.3
+GND  | GND
 
 ![](/docs/images/ble-arduino.jpg)
 
 ## Glue the microbuttons to the screen
 
-We need the buttons to be next to the screen, and the easiest way is to glue them.
+We need the buttons to be next to the screen. The easiest way to achieve this
+is actually to glue them in place first, and then solder them.
 
 ![](/docs/images/screen-buttons.jpg)
 
 ### Solder the pins and the screen
 
-The main objective now is to connect the Arduino+BLE to the Screen+Buttons.
+The goal now is to connect the Arduino+BLE to the Screen+Buttons.
 
-To make this job easier, we soldered the screen and button pins to a middle PCB board.
+To make this job easier, we soldered the screen and button pins to a
+middle PCB board, made from a coutout from a standard stripboard.
 
 ![](/docs/images/screen-pcb.jpg)
 
-#### table
-PINS TODO
+Screenboard  | Arduino
+------------ | -------
+SCL          | A5
+SDA          | A4
+VCC          | 3.3
+GND          | GND
+RIGHT BT     | D4
+LEFT BT      | D5
+SELECT BT    | D6
+MENU BT      | D2
+
 
 Reminder: The screen uses 2 analog pins (A4 and A5) which are in the middle of
 the Arduino Mini board.
 
-Once you finished, you can test the prototype by connecting the Arduino Mini
-to your computer (by using the USB-TTL adaptor).
-
 ![](/docs/images/screen-arduino.jpg)
+
+Place the components on their place in the strap before soldering, so that
+you know they will fit afterwards. Once you finished, you can test the
+prototype by connecting the Arduino Mini to your computer (by using the
+USB-TTL adaptor).
 
 ### Buzzer and Vibrator
 
 Connect these two additional pieces to the following pins:
 
-#### table
-PINS TODO
+components  | Arduino
+----------- | -------
+BUZZER      | D11
+VIBRATOR    | D12
+
+They fit into their own link in the strap.
 
 ### Battery and changer
 
-This makes the watchduino portable, for our prototype we use a 240mah battery
-and a LiPo USB charger, both connected to the VCC and GND pins on the Arduino
+Having a rechargeable battery is what will actually make your WatchDuino
+portable. For ours we use a 240mAh battery, and a USB LiPo charcher,
+both connected to the VCC and GND pins on the Arduino. Each of them
+placed on a separate link on the strap.
 
 Optionally, you could remove the LiPo charger from the model, and keep 2 pins
 to charge the battery using an external LiPo charger
@@ -153,7 +201,7 @@ to charge the battery using an external LiPo charger
 
 ### Enjoy your WatchDuino 2
 
-Now you have a fully assembled WatchDuino 2, now get a case to keep all
-the components and enjoy
+Now you have a fully assembled WatchDuino 2! Place everything in their place
+in the case, put it on your wrist, and go have fun with it.
 
 ![](/docs/images/watchduino2.jpg)
