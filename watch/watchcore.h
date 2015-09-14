@@ -7,10 +7,9 @@
 #define SSD1306I2C_U8G
 #define JEELIB_ENABLED //TODO Fix jeelib. if enabled bluetooth won't work, maybe we should use delay on bluetooth ?
 #define BLUETOOTH 
-//#define DEBUG //Reply with the same character/string everytime a value is received via bluetooth
 #define VIBRATION 11
 #define TOPBAR
-#define DEBUG
+//#define DEBUG
 #define BUZZERPIN  12
 #define SELECT_SCREEN
 
@@ -22,9 +21,15 @@
 #include "screen.h"
 
 //CONTROLS
-#define UP_PIN 4
+/*#define UP_PIN 4
 #define DOWN_PIN 5
 #define SELECT_PIN 6
+*/
+
+//ALTERNATIVE CONTROLS FOR ASSEMBLED PROTOTYPE
+#define UP_PIN 6
+#define DOWN_PIN 4
+#define SELECT_PIN 5
 
 #define WAKE_PIN  2                // pin used for waking up
 

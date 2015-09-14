@@ -124,7 +124,12 @@ void sysinit(){
     #ifdef VIBRATION
       pinMode(VIBRATION,OUTPUT);
     #endif
-    
+
+    bt.sendATCommand("AT");
+    bt.sendATCommand("AT+PWRM0");
+    bt.sendATCommand("AT+NAMEWatchDuino"); 
+    bt.sendATCommand("AT+RESET"); 
+              
     bt.adjustTime();
      
     wakeUp() ;
@@ -238,7 +243,7 @@ void drawSleep(){
   display.firstPage();  
   do {
     if (notifications.hasNotifications()) display.drawXBMP(15, 2, message_width,message_height,message_img);
-    if (bt.enabled) display.drawXBMP(0, 0, bluetooth_width,bluetooth_height,bluetooth_img);
+    //if (bt.enabled) display.drawXBMP(0, 0, bluetooth_width,bluetooth_height,bluetooth_img);
     if (lowBattery()) topbar.printBarBattery();
     drawTime(WIDTH/2 - 15,HEIGHT/2, ':');
   } while( display.nextPage() );       
@@ -264,6 +269,8 @@ void checkSleep(){
             #ifdef VIBRATION  
               digitalWrite(VIBRATION, LOW);      //JUst in case
             #endif
+            
+            bt.sleep();
             
             drawSleep();
             
@@ -293,6 +300,9 @@ void checkSleep(){
               drawSleep();
               
             }
+
+            bt.awake();
+            
             //if (bt.sleep)  bt.enable();
             
             #ifdef DEBUG

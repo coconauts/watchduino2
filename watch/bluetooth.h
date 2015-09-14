@@ -27,7 +27,7 @@ const char CM_ALARM[] = "!al";
 const char CM_SETTINGS[] = "!st";
 const char CM_WARNING[] = "!wr";
 
-#define BLUETOOTH_DELAY  100
+#define BLUETOOTH_DELAY  50
 
 class Bluetooth {
 
@@ -48,25 +48,59 @@ class Bluetooth {
       //bluetooth.print("AT+PWRM0");
       //bluetooth.print("AT+IMME1");
       //bluetooth.print("AT+ROLE1");
-      //bluetooth.write("AT+NAMEWatchduino"); 
+
+      //sendATCommand("AT+PWRM0");
+      //sendATCommand("AT+NAMEWatchduino"); 
+      //sendATCommand("AT+RESET"); 
 
     }
     ~Bluetooth(){
     }
-  
+
+  //Dangerous
+  void sendATCommand(String str){
+
+    bool atResponse = false;
+    while(!atResponse) {
+
+      bluetooth.print(str); 
+      delay(BLUETOOTH_DELAY);
+      while(bluetooth.available()){
+        atResponse = true;
+        bluetooth.read();
+      }
+    }
+  }
+  void sleep(){
+
+    send(CM_SLEEP);
+
+     sendATCommand("AT"); 
+     sendATCommand("AT+SLEEP"); 
+     //sendATCommand("AT+NAMEWatchZ");
+     //sendATCommand("AT+RESET"); 
+
+  }
+  void awake() {
+    
+     /*sendATCommand("AT"); 
+     sendATCommand("AT+NAMEWatchDuino");
+     sendATCommand("AT+RESET"); */
+  }
+ 
     void send(String m){
       
-      bluetooth.println(' '+m+'\r');
+      bluetooth.println(m+'\r');
        delay(BLUETOOTH_DELAY);
     } 
     void send(String command, String v){
       
-      bluetooth.println(' '+command + ':'+v+'\r');
+      bluetooth.println(command + ':'+v+'\r');
        delay(BLUETOOTH_DELAY);
     } 
     void send(String command, int v){
       
-      bluetooth.print(' '+command + ':');
+      bluetooth.print(command + ':');
       bluetooth.print(v);
       bluetooth.println('\r');
       delay(BLUETOOTH_DELAY);
@@ -79,12 +113,6 @@ class Bluetooth {
     void adjustTime(){
         send(CM_TIME);
     }
-   
-   void enterATMode(){
-     delay(BLUETOOTH_DELAY);
-     bluetooth.print("AT"); 
-     delay(BLUETOOTH_DELAY);
-   }
     
   private: 
   
@@ -117,8 +145,7 @@ class Bluetooth {
         setTime(buffer.toInt());
       } else if (buffer.startsWith(CM_ALARM)) {
         alarmEnabled = true;
-      } 
-      else if (buffer.startsWith(CM_WEATHER)) {
+      } else if (buffer.startsWith(CM_WEATHER)) {
         weather = buffer;
         weather.remove(0,4);
       } else if (buffer.startsWith(CM_SETTINGS) ){
@@ -158,8 +185,9 @@ class Bluetooth {
       } else if (buffer.startsWith(CM_TFL)) {
          response = buffer;
          response.remove(0,4);
-      } else if (buffer.startsWith(CM_DEBUG)) send(CM_DEBUG, buffer); 
-      else if (buffer.startsWith(CM_AT)) {
+      } else if (buffer.startsWith(CM_DEBUG))  {
+        //send(CM_DEBUG, buffer); 
+      } else if (buffer.startsWith(CM_AT)) {
         buffer.remove(0,4);
         bluetooth.print(buffer);
       } else send(CM_ERROR, buffer); //Unrecognized message
@@ -180,10 +208,11 @@ class Bluetooth {
             
       if(bluetooth.available()){
 
-         wakeUp();
         enabled = true;
         data=bluetooth.read();
 
+        wakeUp();
+        
          #ifdef DEBUG
               Serial.print(F("Received bluetooth "));
               Serial.println(data);
