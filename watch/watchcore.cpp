@@ -35,6 +35,13 @@ long sleepStart = 0;                   // counter
 #define SLEEP_TIME 60000
 //SOUND VARIABLES
 
+long lastBatMsg = 0;
+#define SEND_BAT_TIME 300000 //Send battery status every 5 mins
+#define LOW_BAT 3500
+
+long lastTimeUpdate = 0;
+#define SEND_UPDATE_TIME 3600000 //Send battery status every hour
+
 short NOTE_DURATION = 1000 / 4; //a quarter
 #define DELAY_BETWEEN_NOTES 1000 //ms
 #define SECONDS_IN_DAY 86400
@@ -104,9 +111,6 @@ int newScreen = 0;
   bool vibrationActive = true;
 #endif
 
-long lastBatMsg = 0;
-#define SEND_BAT_TIME 300000 //Send battery status every 5 mins
-#define LOW_BAT 3500
 
 
 void sysinit(){
@@ -127,10 +131,10 @@ void sysinit(){
 
     bt.sendATCommand("AT");
     bt.sendATCommand("AT+PWRM0");
-    bt.sendATCommand("AT+NAMEWatchDuino"); 
+    bt.sendATCommand("AT+NAMEWatchduino"); 
     bt.sendATCommand("AT+RESET"); 
               
-    bt.adjustTime();
+    //bt.adjustTime();
      
     wakeUp() ;
     vibrate(1,100);
@@ -151,6 +155,11 @@ void sysloop() {
         if (lastBatMsg + SEND_BAT_TIME < millis() ) {
           lastBatMsg = millis();
           bt.send(CM_BAT, readVcc());
+        }
+
+        if (lastTimeUpdate + SEND_UPDATE_TIME < millis() ) {
+          lastTimeUpdate = millis();
+          bt.adjustTime();
         }
 
         #ifdef BLUETOOTH
@@ -175,11 +184,7 @@ void sysloop() {
         else screens[screen]->controller();
         
         screens[screen]->update();
-        
-        //TODO
-        //checkAlarm(alarm_melody, alarm_durations, ALARM_SIZE);
-        if (minute() == 59 && second() == 0)  bt.adjustTime();
-        
+                
          #ifdef VIBRATION
           if (vibrationEnabled && vibrationActive && vibrationStart + vibrationDuration < millis()){
                digitalWrite(VIBRATION, LOW);
