@@ -20,7 +20,7 @@ class Weather: public Screen {
 
         display.drawXBMP(0,20, weather_width,weather_height, weather_img);
 
-        drawLines(0,50, 100, weather.c_str());
+         drawLines(20,25, 100, response.c_str());
 
         drawButton(SELECT_PIN, refresh_width,refresh_height, (unsigned char*) refresh_img);
     }
@@ -30,11 +30,11 @@ class Weather: public Screen {
     }
     void enter() {
       lastRequest = millis();
-      
       bt.send(CM_WEATHER);
+      response = EMPTY;
     }
     void exit() {
-      weather = "";
+      response = EMPTY;
     }
 };
 

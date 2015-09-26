@@ -27,9 +27,9 @@ class Tfl: public Screen {
          
         display.drawXBMP(0,20, tfl_width,tfl_height, tfl_img);
 
-        display.setFont(u8g_font_4x6r );
+        //display.setFont(u8g_font_4x6r );
         drawLines(20,25, 100, response.c_str());
-        display.setFont(u8g_font_fixed_v0r);
+        //display.setFont(u8g_font_fixed_v0r);
         
         if (count != 0) drawButton(UP_PIN, left_width,right_height, (unsigned char*) left_img);
         drawButton(DOWN_PIN, left_width,right_height, (unsigned char*) right_img);
@@ -44,12 +44,14 @@ class Tfl: public Screen {
          count++;
          wakeUp() ;
          bt.send(CM_TFL, count);
+         response = EMPTY;
        }
       else if (pushedButton(DOWN_PIN) ) {
          count--;
          wakeUp() ;
          if (count < 0) count = 0;
          bt.send(CM_TFL, count);
+         response = EMPTY;
        }
     }
     void enter() {
@@ -57,10 +59,11 @@ class Tfl: public Screen {
       wakeUp() ;
       count= 0;
       bt.send(CM_TFL);
+      response = EMPTY;
       
     }
     void exit() {
-      response = "";
+      response = EMPTY;
     }
 };
 

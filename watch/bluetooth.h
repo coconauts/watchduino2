@@ -26,6 +26,7 @@ const char CM_TFL[] = "!tf";
 const char CM_ALARM[] = "!al";
 const char CM_SETTINGS[] = "!st";
 const char CM_WARNING[] = "!wr";
+const char EMPTY[] = "";
 
 #define BLUETOOTH_DELAY  50
 
@@ -41,7 +42,7 @@ class Bluetooth {
       
       bluetooth.begin(9600);
           
-      buffer = "";     
+      buffer = EMPTY;     
       enabled = true;    
       sleepEnabled = false;  
       
@@ -137,8 +138,8 @@ class Bluetooth {
               Serial.print(F("Full message "));
               Serial.println(buffer);
           #endif
-          
-      if (buffer.startsWith(CM_PING)) {
+
+     if (buffer.startsWith(CM_PING)) {
         send(CM_PING);
       } else if (buffer.startsWith(CM_TIME)) {
         buffer.remove(0,4);
@@ -146,8 +147,8 @@ class Bluetooth {
       } else if (buffer.startsWith(CM_ALARM)) {
         alarmEnabled = true;
       } else if (buffer.startsWith(CM_WEATHER)) {
-        weather = buffer;
-        weather.remove(0,4);
+        response = buffer;
+        response.remove(0,4);
       } else if (buffer.startsWith(CM_SETTINGS) ){
         //TODO dynamic settings 
       }
@@ -186,13 +187,13 @@ class Bluetooth {
          response = buffer;
          response.remove(0,4);
       } else if (buffer.startsWith(CM_DEBUG))  {
-        //send(CM_DEBUG, buffer); 
+        send(CM_DEBUG, buffer); 
       } else if (buffer.startsWith(CM_AT)) {
         buffer.remove(0,4);
         bluetooth.print(buffer);
       } else send(CM_ERROR, buffer); //Unrecognized message
      
-      buffer = "";
+      buffer = EMPTY;
       receiving = false;
       
     }
@@ -222,18 +223,16 @@ class Bluetooth {
         #endif*/
       
         switch(data) {
-          //13: \r
-        case 13:  
-          //Returning responses
-          processMessage();
-  
+        case 13: //13: \r
+          if(receiving) processMessage(); //Returning responses
+          else {} //Empty message
+          
           break; //end message
         default: 
            
           lastReceived = millis() ;
           receiving = true;
           buffer.concat(data);
-          
         }
        
       }

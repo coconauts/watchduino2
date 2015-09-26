@@ -35,20 +35,23 @@ class Twitter: public Screen {
       else if (pushedButton(UP_PIN) ) {
          count++;
          bt.send(CM_TWITTER, count);
+         response = EMPTY;
        }
       else if (pushedButton(DOWN_PIN) ) {
          count--;
          if (count < 0) count = 0;
          bt.send(CM_TWITTER, count);
+         response = EMPTY;
        }
     }
     void enter() {
       count= 0;
       bt.send(CM_TWITTER, 0);
+      response = EMPTY;
 
     }
     void exit() {
-      response = "";
+      response = EMPTY;
     }
 };
 

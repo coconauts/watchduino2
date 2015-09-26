@@ -9,7 +9,7 @@
 #define BLUETOOTH 
 #define VIBRATION 11
 #define TOPBAR
-//#define DEBUG
+#define DEBUG
 #define BUZZERPIN  12
 #define SELECT_SCREEN
 
@@ -20,16 +20,20 @@
 
 #include "screen.h"
 
-//CONTROLS
-/*#define UP_PIN 4
-#define DOWN_PIN 5
-#define SELECT_PIN 6
-*/
+//#define PROTOTYPE
 
-//ALTERNATIVE CONTROLS FOR ASSEMBLED PROTOTYPE
-#define UP_PIN 6
-#define DOWN_PIN 4
-#define SELECT_PIN 5
+//CONTROLS
+#ifdef PROTOTYPE
+  #define UP_PIN 4
+  #define DOWN_PIN 5
+  #define SELECT_PIN 6
+#else
+  //ALTERNATIVE CONTROLS FOR ASSEMBLED PROTOTYPE
+  #define UP_PIN 6
+  #define DOWN_PIN 4
+  #define SELECT_PIN 5
+#endif
+
 
 #define WAKE_PIN  2                // pin used for waking up
 
@@ -59,13 +63,12 @@ extern int selectedTimeSet;
 extern long sleepStart  ;
 
 //WEATHER
-extern String weather;
 extern unsigned char* weatherImage;
 
 //ALARM
 extern boolean alarmEnabled;
 
-//TWITTER
+//RESPONSE (Twitter, weather, tfl)
 extern String response;
 
 //NOTIF
