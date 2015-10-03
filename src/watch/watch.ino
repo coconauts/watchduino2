@@ -10,7 +10,7 @@
                      // powerDown example code: http://hwstartup.wordpress.com/2013/04/15/how-to-run-an-arduino-clone-on-aa-batteries-for-over-a-year-part-2/
 
 #include <SoftwareSerial.h>
-#include "watchcore.h"
+#include <watchcore.h>
 /*int main(void) {
    init(); // don't forget this!
    sysinit(); 
