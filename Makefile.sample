@@ -2,10 +2,9 @@
 
 # Reference for variables: https://github.com/sudar/Arduino-Makefile/blob/master/arduino-mk-vars.md#arduino-ide-variables
 
-# Installation dirs
-ARDUINO_DIR= /home/marbu/bins/arduino-1.6.5-r5_watchduino2
-ARDUINO_PREFERENCES_PATH = /home/marbu/bins/arduino-1.6.5-r5_watchduino2/lib/preferences.txt
-ARDMK_DIR = /home/marbu/bins/Arduino-Makefile
+# Installation dirs - EDIT!
+ARDUINO_DIR = EDIT-ME
+ARDMK_DIR = EDIT-ME
 
 # Compilation opts
 BOARD_TAG    = pro
