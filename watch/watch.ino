@@ -19,10 +19,18 @@
 }*/
 
 void setup(){
-  sysinit();
+  
+      #ifdef DEBUG
+      Serial.begin(4800);
+      Serial.println(F("Serial ready on 4800, comment DEBUG at watchcore.h to disable"));
+    #endif 
+    sysinit();
 }
 
 void loop(){
+      #ifdef DEBUG
+      Serial.println(F("loop"));
+    #endif 
   sysloop();
 }
 

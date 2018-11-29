@@ -62,11 +62,12 @@ class Bluetooth {
   void sendATCommand(String str){
 
     bool atResponse = false;
-    while(!atResponse) {
+    long start = millis(); 
+    while(!atResponse && start + 2000 < millis()) {
 
       bluetooth.print(str); 
       delay(BLUETOOTH_DELAY);
-      while(bluetooth.available()){
+      while(bluetooth.available() && start + 5000 < millis()){
         atResponse = true;
         bluetooth.read();
       }

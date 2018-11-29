@@ -133,7 +133,7 @@ void sysinit(){
     bt.sendATCommand("AT+PWRM0");
     bt.sendATCommand("AT+NAMEWatchduino"); 
     bt.sendATCommand("AT+RESET"); 
-              
+
     //bt.adjustTime();
      
     wakeUp() ;
@@ -142,11 +142,7 @@ void sysinit(){
     setTime(0,0,0,0,0,0);
     
     delay(100); screens[screen]->enter();
-    
-    #ifdef DEBUG
-      Serial.begin(4800);
-      Serial.println(F("Serial ready on 4800, comment DEBUG at watchcore.h to disable"));
-    #endif 
+   
       
 }
 
