@@ -1,0 +1,18 @@
+# Arduino Make file. Refer to https://github.com/sudar/Arduino-Makefile
+
+# Reference for variables: https://github.com/sudar/Arduino-Makefile/blob/master/arduino-mk-vars.md#arduino-ide-variables
+
+# Installation dirs - EDIT!
+ARDUINO_DIR = EDIT-ME
+ARDMK_DIR = EDIT-ME
+
+# Compilation opts
+BOARD_TAG    = pro
+BOARD_SUB = 8MHzatmega328
+MONITOR_PORT = /dev/ttyUSB0
+ARCHITECTURE = avr
+ARDUINO_LIBS = Time U8glib SPI SoftwareSerial Wire jeelib_master
+OBJDIR = ../build/build-$(BOARD_TAG)
+
+include $(ARDMK_DIR)/Arduino.mk
+
